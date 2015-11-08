@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="receita" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f4564cae-e319-45f0-8103-bd921c9cd615">
+	<property name="ireport.zoom" value="1.464100000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="data_inicial_br" class="java.lang.String"/>
+	<parameter name="data_final_br" class="java.lang.String"/>
+	<parameter name="condicao" class="java.lang.String"/>
+	<parameter name="titulo" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT DATE_FORMAT(P.efetuado_em, '%d/%m/%Y') AS efetuado_em, Concat('R$ ', Replace(Replace(Replace(Format(SUM(P.preco_total), 2), '.', '|'), ',', '.'), '|', ',')) as preco_total_formatado, SUM(P.preco_total) AS preco_total, P.tipo_situacao_id
+FROM pedidos P
+WHERE P.tipo_situacao_id = 4 $P!{condicao}
+GROUP BY DATE_FORMAT(P.efetuado_em, '%d/%m/%Y')
+ORDER BY P.efetuado_em;]]>
+	</queryString>
+	<field name="efetuado_em" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="preco_total_formatado" class="java.lang.String"/>
+	<field name="preco_total" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tipo_situacao_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="total_geral" class="java.lang.Double" resetType="Group" resetGroup="tipo_situacao_id" calculation="Sum">
+		<variableExpression><![CDATA[$F{preco_total}]]></variableExpression>
+	</variable>
+	<group name="tipo_situacao_id">
+		<groupExpression><![CDATA[$F{tipo_situacao_id}]]></groupExpression>
+		<groupFooter>
+			<band height="21">
+				<textField pattern="¤ #,##0.00">
+					<reportElement x="276" y="0" width="279" height="20" uuid="2c242f48-ec27-4037-b551-74c51277a492"/>
+					<textElement>
+						<font size="11" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{total_geral}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="266" height="20" uuid="80b5766e-8ee9-4d18-bff9-4b57b027d2f1"/>
+					<textElement textAlignment="Right">
+						<font size="11" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total    ]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="37" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="37" forecolor="#FFFFFF" backcolor="#666666" uuid="e474afec-ec57-45ca-8af2-bc4d2819eac9"/>
+				<textElement textAlignment="Center">
+					<font size="26" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lavanderia On-Line]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="555" height="24" uuid="16141791-4051-4ad5-8266-60b675bbfcb7"/>
+				<textElement textAlignment="Center">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{titulo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="20" forecolor="#FFFFFF" backcolor="#CCCCCC" uuid="9f7ff2ab-ca5d-45b4-9fbf-3325d55e66be"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="276" y="0" width="279" height="20" uuid="9e033236-3f01-4143-b389-656bf83f13fa"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Faturamento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="276" height="20" uuid="8f9a55ea-7338-4a82-a2db-51386b00d28e"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data de realização]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="276" height="20" uuid="15c3d516-699d-4c44-b039-29890f2be598"/>
+				<textFieldExpression><![CDATA[$F{efetuado_em}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="276" y="0" width="279" height="20" uuid="a838433a-b623-4d48-b3fe-377f2371843c"/>
+				<textFieldExpression><![CDATA[$F{preco_total_formatado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="24" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="0" width="40" height="20" uuid="fa7518a3-dcce-4930-8ab6-8661a938ecc4"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="0" width="60" height="20" uuid="734e8017-5dc4-41cf-a605-1864e146fe46"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

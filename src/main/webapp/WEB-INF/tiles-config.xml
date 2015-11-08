@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE tiles-definitions PUBLIC  
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<definition name="cliente_template" template="/WEB-INF/jsp/template/cliente/layout.jsp">
+		<put-attribute name="title" value="Lavanderia On-Line (Cliente)" />
+		<put-attribute name="header"
+			value="/WEB-INF/jsp/template/cliente/header.jsp" />
+		<put-attribute name="menu"
+			value="/WEB-INF/jsp/template/cliente/menu.jsp" />
+		<put-attribute name="body" value="" />
+	</definition>
+
+	<definition name="funcionario_template"
+		template="/WEB-INF/jsp/template/funcionario/layout.jsp">
+		<put-attribute name="title" value="Lavanderia On-Line (Funcionário)" />
+		<put-attribute name="header"
+			value="/WEB-INF/jsp/template/funcionario/header.jsp" />
+		<put-attribute name="menu"
+			value="/WEB-INF/jsp/template/funcionario/menu.jsp" />
+		<put-attribute name="body" value="" />
+	</definition>
+
+	<definition name="novo_cliente_template"
+		template="/WEB-INF/jsp/template/funcionario/layout.jsp">
+		<put-attribute name="title" value="Lavanderia On-Line (Novo Cliente)" />
+		<put-attribute name="header" value="" />
+		<put-attribute name="menu" value="" />
+		<put-attribute name="body" value="" />
+	</definition>
+
+	<definition name="limpo" template="/WEB-INF/jsp/template/blank.jsp">
+		<put-attribute name="title" value="Lavanderia On-Line" />
+		<put-attribute name="body" value="" />
+	</definition>
+
+	<definition name="funcionario.tiposroupa.index" extends="funcionario_template">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/funcionarios/tiposroupa/index.jsp" />
+	</definition>
+	<definition name="funcionario.tiposroupa.new" extends="funcionario_template">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/funcionarios/tiposroupa/new.jsp" />
+	</definition>
+	<definition name="funcionario.tiposroupa.edit" extends="funcionario_template">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/funcionarios/tiposroupa/edit.jsp" />
+	</definition>
+
+	<definition name="funcionario.funcionario.index" extends="funcionario_template">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/funcionarios/funcionarios/index.jsp" />
+	</definition>
+	<definition name="funcionario.funcionario.new" extends="funcionario_template">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/funcionarios/funcionarios/new.jsp" />
+	</definition>
+	<definition name="funcionario.funcionario.edit" extends="funcionario_template">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/funcionarios/funcionarios/edit.jsp" />
+	</definition>
+	<definition name="cliente.new" extends="novo_cliente_template">
+		<put-attribute name="body" value="/WEB-INF/jsp/clientes/new.jsp" />
+	</definition>
+
+	<definition name="main" extends="limpo">
+		<put-attribute name="body" value="/WEB-INF/jsp/externo/main.jsp" />
+	</definition>
+
+	<definition name="cliente.neworder" extends="cliente_template">
+		<put-attribute name="body" value="/WEB-INF/jsp/clientes/pedidos/new.jsp" />
+	</definition>
+	<definition name="cliente.orderconfirm" extends="cliente_template">
+		<put-attribute name="body" value="/WEB-INF/jsp/clientes/pedidos/orderconfirm.jsp" />
+	</definition>
+	<definition name="cliente.done" extends="cliente_template">
+		<put-attribute name="body" value="/WEB-INF/jsp/clientes/pedidos/done.jsp" />
+	</definition>
+	<definition name="cliente.orders" extends="cliente_template">
+		<put-attribute name="body" value="/WEB-INF/jsp/clientes/pedidos/orders.jsp" />
+	</definition>
+	
+	<definition name="funcionario.login" extends="novo_cliente_template">
+		<put-attribute name="body" value="/WEB-INF/jsp/externo/login_funcionario.jsp" />
+	</definition>
+	
+	<definition name="funcionario.orders" extends="funcionario_template">
+		<put-attribute name="body" value="/WEB-INF/jsp/funcionarios/pedidos/orders.jsp" />
+	</definition>
+	
+	<definition name="funcionario.reports" extends="funcionario_template">
+		<put-attribute name="body" value="/WEB-INF/jsp/funcionarios/relatorios/index.jsp" />
+	</definition>	
+</tiles-definitions>

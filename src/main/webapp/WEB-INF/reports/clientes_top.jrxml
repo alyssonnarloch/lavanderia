@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="clientes_top" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8b77decb-ccbd-4845-9654-81be21cfa315">
+	<property name="ireport.zoom" value="1.3310000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[(
+	SELECT nome, num_pedidos, valor_total FROM (
+		SELECT C.nome AS nome, COUNT(P.id) AS num_pedidos, Concat('R$ ', Replace(Replace(Replace(Format(SUM(P.preco_total), 2), '.', '|'), ',', '.'), '|', ',')) AS valor_total
+		FROM  pedidos P LEFT JOIN usuarios C ON (P.cliente_id = C.id AND C.tipo_usuario = 1)
+        WHERE P.tipo_situacao_id = 4
+		GROUP BY C.nome
+		ORDER BY num_pedidos DESC, valor_total DESC
+        LIMIT 5
+    ) as aux_table
+)
+UNION
+(
+	SELECT 'Total', COUNT(P.id) AS total_pedidos, Concat('R$ ', Replace(Replace(Replace(Format(SUM(P.preco_total), 2), '.', '|'), ',', '.'), '|', ',')) AS valor_total_total
+	FROM  pedidos P LEFT JOIN usuarios C ON (P.cliente_id = C.id AND C.tipo_usuario = 1)
+    WHERE P.tipo_situacao_id = 4
+);]]>
+	</queryString>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="num_pedidos" class="java.lang.Long"/>
+	<field name="valor_total" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="38" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="37" forecolor="#FFFFFF" backcolor="#666666" uuid="fc6bd25e-8d4a-4e85-9a18-f5a21541bdc8"/>
+				<textElement textAlignment="Center">
+					<font size="26" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lavanderia On-Line]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="23" uuid="f263abd0-a5f1-479d-8d20-4318c101855b"/>
+				<textElement textAlignment="Center">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Clientes Top 5]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="20" forecolor="#FFFFFF" backcolor="#CCCCCC" uuid="2bd5b8d2-4a98-464b-9c26-ac5a563106ee"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="230" height="20" uuid="711ff577-450f-4b4d-a36f-dbcc00f89bb6"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="230" y="0" width="151" height="20" uuid="46e8ff52-43ad-4d03-bd04-92afdf030bd0"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Número de pedidos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="381" y="0" width="174" height="20" uuid="17ec6765-17c1-4769-885e-deb85e5a7c63"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor Total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="230" height="20" uuid="c12c39ac-67cb-4e39-ae42-be59b5ad633f"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="230" y="0" width="151" height="20" uuid="6382ba5e-8a44-40c2-8e4a-c92fd4330c3d"/>
+				<textFieldExpression><![CDATA[$F{num_pedidos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="381" y="0" width="174" height="20" uuid="f0ea69ab-d5db-45ee-be14-46337ff7f4e6"/>
+				<textFieldExpression><![CDATA[$F{valor_total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
